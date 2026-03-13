@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Màn hình Bếp - Serenity Cafe</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <script>
+        if (localStorage.getItem('cafe_role') !== 'kitchen' && localStorage.getItem('cafe_role') !== 'admin') {
+            window.location.href = '/login.html';
+        }
+    </script>
+    <script src="/socket.io/socket.io.js"></script>
+    <style>
+        /* Specific adjustments for wider screens on dashboard */
+        body { padding: 20px; }
+        .dashboard-container { max-width: 1400px; margin: 0 auto; }
+        .header-bg { background: var(--secondary); color: white; padding: 20px; border-radius: var(--radius); margin-bottom: 24px; display: flex; justify-content: space-between; align-items: center; }
+        .header-bg h1 { margin: 0; display: flex; align-items: center; gap: 10px; color: white; }
+    </style>
+</head>
+<body class="bg-light">
+
+    <div class="dashboard-container">
+        <div class="header-bg">
+            <h1><i class="fa-solid fa-fire-burner"></i> Quản lý Bếp</h1>
+            <div class="d-flex align-items-center">
+                <a href="/admin.html" class="btn btn-outline-light btn-sm me-3" style="text-decoration: none; color: white; border-color: rgba(255,255,255,0.5);"><i class="fa-solid fa-gear"></i> Quản trị</a>
+                <button class="btn btn-outline-light btn-sm" onclick="localStorage.clear(); window.location.href='/login.html'"><i class="fa-solid fa-sign-out-alt"></i> Đăng xuất</button>
+                <div id="connection-status" class="text-success"><i class="fa-solid fa-wifi"></i> Trực tuyến</div>
+            </div>
+        </div>
+
+        <div id="loader" class="text-center mt-4 text-muted">Đang tải đơn hàng...</div>
+
+        <!-- Orders Grid -->
+        <div class="dashboard-grid" id="orders-container">
+            <!-- Order cards will be injected here via JS -->
+        </div>
+    </div>
+
+    <!-- Notification Sound (Optional) -->
+    <!-- <audio id="ding" src="https://actions.google.com/sounds/v1/alarms/beep_short.ogg" preload="auto"></audio> -->
+
+    <script src="kitchen.js"></script>
+</body>
+</html>

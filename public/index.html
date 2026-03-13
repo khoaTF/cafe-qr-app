@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Thực đơn - Đặt món</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="styles.css">
+    <!-- Socket.IO Client -->
+    <script src="/socket.io/socket.io.js"></script>
+</head>
+<body class="bg-light">
+
+    <!-- Header -->
+    <header class="app-header">
+        <div class="header-content">
+            <h1><i class="fa-solid fa-mug-hot"></i> Serenity Cafe</h1>
+            <div class="table-info">Bàn <span id="table-number-display">5</span></div>
+        </div>
+    </header>
+
+    <!-- Main Content: Menu -->
+    <main class="container mb-padding">
+        
+        <!-- Categories (Hardcoded for prototype simplicity) -->
+        <div class="category-pills">
+            <button class="pill active" data-category="All">Tất cả</button>
+            <button class="pill" data-category="Coffee">Cà phê</button>
+            <button class="pill" data-category="Tea">Trà</button>
+            <button class="pill" data-category="Food">Đồ ăn</button>
+        </div>
+
+        <div id="loader" class="text-center mt-4">Đang tải thực đơn...</div>
+
+        <!-- Menu Grid -->
+        <div class="menu-grid" id="menu-container">
+            <!-- Menu items will be injected here via JS -->
+        </div>
+
+    </main>
+
+    <!-- Floating Cart Summary -->
+    <div class="floating-cart" id="floating-cart" style="display: none;">
+        <div class="cart-summary flex-between">
+            <div>
+                <span id="cart-item-count" class="badge">0</span> Món
+            </div>
+            <div class="font-bold">
+                Tổng: <span id="cart-total-price">0</span>
+            </div>
+            <button id="view-cart-btn" class="btn btn-primary">Xem giỏ hàng</button>
+        </div>
+    </div>
+
+    <!-- Modal: Cart & Checkout -->
+    <div class="cart-modal" id="cart-modal">
+        <div class="cart-modal-content">
+            <div class="cart-modal-header flex-between">
+                <h2>Đơn hàng của bạn</h2>
+                <button id="close-modal" class="btn-icon"><i class="fa-solid fa-times"></i></button>
+            </div>
+            <div class="cart-modal-body" id="cart-items-container">
+                <!-- Cart items list -->
+                <div class="empty-cart text-center text-muted">Giỏ hàng đang trống.</div>
+            </div>
+            <div class="cart-modal-body" style="padding-top: 0;">
+                <label for="order-note" class="font-bold text-muted" style="display: block; margin-bottom: 5px;">Ghi chú (Tùy chọn):</label>
+                <textarea id="order-note" placeholder="Vd: Ít đường, nhiều đá..." rows="2" style="width: 100%; border-radius: 8px; border: 1px solid #ddd; padding: 10px; font-family: inherit; font-size: 0.95rem; resize: none;"></textarea>
+            </div>
+            <div class="cart-modal-footer">
+                <div class="flex-between mb-2">
+                    <span class="font-bold">Tổng thanh toán:</span>
+                    <span class="font-bold text-primary"><span id="checkout-total">0</span></span>
+                </div>
+                <!-- Mock Payment Button -->
+                <button id="checkout-btn" class="btn btn-primary btn-block btn-lg" disabled>
+                    <i class="fa-brands fa-apple-pay"></i> Thanh toán
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Success Screen Overlay -->
+    <div id="success-overlay" class="overlay flex-center" style="display: none;">
+        <div class="success-card text-center">
+            <i class="fa-solid fa-circle-check text-success success-icon"></i>
+            <h2>Thanh toán thành công!</h2>
+            <p class="text-muted">Đơn hàng của bạn đã được gửi đến quầy pha chế.</p>
+            <p>Trạng thái: <strong id="live-status" class="text-primary">Đang chờ</strong></p>
+            <button id="new-order-btn" class="btn btn-outline mt-3">Đặt đơn mới</button>
+        </div>
+    </div>
+
+    <script src="customer.js"></script>
+</body>
+</html>
